@@ -1,0 +1,11 @@
+Title: Launch Webinar – Feature X
+Date: 2025-09-12
+Speakers: Host (Maya), PM (Diego), Engineer (Lin)
+
+Maya: Welcome! Today we’re unveiling Feature X for faster experimentation.
+Diego: Feature X adds instant variant rollout and guardrails.
+Lin: Under the hood we rewrote the scheduler; p95 latency is down 43%.
+Audience Q: How does billing change?
+Diego: We moved to active-seat with volume tiers; existing customers keep current plans.
+Maya: Roadmap next: integrations, better metrics, and a no-code editor.
+ 

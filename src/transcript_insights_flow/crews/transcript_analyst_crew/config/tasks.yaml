@@ -1,0 +1,45 @@
+# analyze_transcript_task:
+#   description: >
+#     Carefully analyze the available knowledge base to find information relevant to the question:
+#     "{question}"
+#
+#     Your analysis should:
+#     - Identify all sections of the transcript that relate to the question
+#     - Extract specific quotes, statements, or data points that help answer the question
+#     - Note any contextual information that provides deeper understanding
+#     - Identify patterns, themes, or recurring topics if relevant
+#     - Consider both explicit statements and implicit meanings
+#     - Organize findings in a way that makes it easy to synthesize a comprehensive answer
+#   expected_output: >
+#     A detailed analysis document containing:
+#     - Key findings organized by relevance to the question
+#     - Specific quotes from the transcript with context
+#     - Important themes or patterns identified
+#     - Any contradictions or qualifications that should be noted
+#     - A clear structure that can be used to build a final answer
+#     All formatted as clear bullet points or sections
+#   agent: transcript_analyzer
+
+synthesize_answer_task:
+  description: >
+    Based on the transcript analysis provided, synthesize a comprehensive and clear
+    answer to the question: "{question}"
+
+    Your answer should:
+    - Directly address the question asked
+    - Be well-structured and easy to follow
+    - Support all claims with specific evidence from the transcript
+    - Include relevant quotes when they strengthen the answer
+    - Acknowledge any limitations, contradictions, or areas of uncertainty
+    - Provide sufficient context for the answer to stand alone
+    - Be thorough yet concise, avoiding unnecessary information
+  expected_output: >
+    A comprehensive answer formatted as markdown that includes:
+    - A clear, direct response to the question
+    - Supporting evidence organized logically
+    - Relevant quotes from the transcript (properly attributed)
+    - Any important context or qualifications
+    - A concluding summary if the answer is complex
+    The answer should be professional, accurate, and easy to understand.
+    Formatted as markdown without '```'
+  agent: answer_synthesizer
