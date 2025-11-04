@@ -1,52 +1,55 @@
 character_selection_task:
   description: >
-    Analyze the following analysis report and identify 3-5 Star Wars characters
-    whose stories, personalities, or journeys relate to the key themes and insights
-    discovered in the analysis.
+    Read the analysis provided below and select 3-4 Star Wars characters who would
+    have interesting perspectives to discuss these findings in a conversation.
 
-    Analysis Report:
+    Analysis from transcript:
     {analysis}
 
-    For each character, explain:
-    - Why this character is relevant to the themes
-    - What specific aspect of their story connects to the insights
-    - How their personality or relationships could contribute to a discussion
+    Choose characters whose personalities, experiences, and speaking styles will create
+    engaging dialogue. Consider:
+    - Different perspectives (optimist vs skeptic, master vs apprentice, leader vs soldier)
+    - Distinct speaking patterns (Yoda's syntax, Han's casualness, Obi-Wan's wisdom)
+    - Relevant experiences from their stories that connect to the analysis topics
 
-    Consider characters from all Star Wars media (movies, series, expanded universe)
-    and choose those who would create interesting dialogue dynamics.
+    Pick characters from the main films and popular series who audiences know well.
   expected_output: >
-    A list of 3-5 Star Wars characters with detailed explanations of:
-    1. Character name and their role in Star Wars
-    2. Key personality traits and story arc summary
-    3. Specific connections to the analysis themes
-    4. Potential discussion angles or perspectives they could bring
-    Formatted as a structured list with clear sections for each character.
+    A list of 3-4 Star Wars characters with:
+    1. Character name
+    2. Why they were chosen (personality and speaking style)
+    3. What perspective they'll bring to discussing the analysis
+    Keep it concise - just the essential information needed for writing their dialogue.
   agent: star_wars_character_researcher
 
-story_creation_task:
+dialogue_creation_task:
   description: >
-    Using the selected Star Wars characters and the analysis insights, write an
-    engaging conversational story where the characters discuss the themes and
-    findings from the analysis.
+    Write a conversation between the selected Star Wars characters where they discuss
+    the analysis findings. Use ONLY dialogue - no narration, no descriptions, no stage
+    directions.
 
-    Requirements:
-    - Write the story as dialogue between the characters, like a screenplay scene
-    - Keep each character's voice authentic to their personality and speech patterns
-    - Have characters naturally reference their own experiences that relate to the insights
-    - Include scene-setting descriptions to establish the context
-    - Make the conversation flow naturally while covering key points from the analysis
-    - Length: 800-1200 words
-    - Include a brief introduction explaining the setup
+    Analysis they're discussing:
+    {analysis}
 
-    The characters should debate, agree, disagree, and build on each other's points
-    in a way that brings the analysis to life through their unique perspectives.
+    CRITICAL RULES:
+    - Write ONLY what the characters say
+    - Format: CHARACTER NAME: their words
+    - NO scene descriptions, NO narration, NO stage directions
+    - Characters must reference ACTUAL content from the analysis above
+    - Stay authentic to each character's voice and speech patterns
+    - Let them have a natural back-and-forth conversation
+    - They should discuss, question, agree, disagree, make connections
+    - Length: 15-25 lines of dialogue
+
+    Example of correct format:
+    YODA: Interesting, this Feature X is. Faster experimentation, they promise.
+    OBI-WAN: Indeed, Master Yoda. The transcript mentions a 43% reduction in latency.
+    HAN: Sounds too good to be true. What's the catch with this new billing system?
+
+    Write the conversation in this exact format - pure dialogue only.
   expected_output: >
-    A fully formatted conversational story featuring Star Wars characters discussing
-    the analysis insights. The output should include:
-    1. A brief introduction (2-3 sentences) setting the scene
-    2. Character dialogue with proper formatting (CHARACTER NAME: dialogue)
-    3. Scene descriptions and character actions in italics
-    4. Natural flow between topics from the analysis
-    5. A satisfying conclusion that ties the conversation together
-    Formatted as markdown without code blocks.
-  agent: conversational_story_writer
+    A conversation in screenplay format with ONLY character dialogue.
+    Format: CHARACTER NAME: what they say
+    No narration. No descriptions. No stage directions. Just the characters talking.
+    The conversation must reference specific points from the analysis.
+    15-25 lines of dialogue total.
+  agent: dialogue_writer

@@ -1,36 +1,21 @@
-from os import name
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, after_kickoff, agent, before_kickoff, crew, task
+from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+
+from transcript_insights_flow.tools.web_search_tool import WebSearchTool
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
+from crewai_tools import ScrapeWebsiteTool
+
 @CrewBase
-class StoryTellerCrew():
-    """StoryTellerCrew crew"""
+class WebSearchCrew():
+    """WebSearchCrew crew"""
 
     agents: List[BaseAgent]
     tasks: List[Task]
-
-
-    @before_kickoff
-    def setup_auth(self, inputs):
-        """Setup authentication or any pre-kickoff logic here"""
-        # For example, setting up API keys for LLM providers
-        print("Setting up authentication...")
-        print("inputs:", inputs)
-
-        return inputs
-    
-    @after_kickoff
-    def teardown(self, outputs):
-        """Teardown or any post-kickoff logic here"""
-        print("Teardown after crew kickoff...")
-        print("outputs: ===========================", outputs)
-
-        return outputs
 
     # Learn more about YAML configuration files here:
     # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
@@ -39,16 +24,17 @@ class StoryTellerCrew():
     # If you would like to add tools to your agents, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
     @agent
-    def star_wars_character_researcher(self) -> Agent:
+    def researcher(self) -> Agent:
         return Agent(
-            config=self.agents_config['star_wars_character_researcher'], # type: ignore[index]
+            config=self.agents_config['researcher'], # type: ignore[index]
+            tools=[WebSearchTool(), ScrapeWebsiteTool()],
             verbose=True
         )
 
     @agent
-    def dialogue_writer(self) -> Agent:
+    def reporting_analyst(self) -> Agent:
         return Agent(
-            config=self.agents_config['dialogue_writer'], # type: ignore[index]
+            config=self.agents_config['reporting_analyst'], # type: ignore[index]
             verbose=True
         )
 
@@ -56,20 +42,20 @@ class StoryTellerCrew():
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     @task
-    def character_selection_task(self) -> Task:
+    def research_task(self) -> Task:
         return Task(
-            config=self.tasks_config['character_selection_task'], # type: ignore[index]
+            config=self.tasks_config['research_task'], # type: ignore[index]
         )
 
     @task
-    def dialogue_creation_task(self) -> Task:
+    def reporting_task(self) -> Task:
         return Task(
-            config=self.tasks_config['dialogue_creation_task'], # type: ignore[index]
+            config=self.tasks_config['reporting_task'], # type: ignore[index]
         )
 
     @crew
     def crew(self) -> Crew:
-        """Creates the StoryTellerCrew crew"""
+        """Creates the WebSearchCrew crew"""
         # To learn how to add knowledge sources to your crew, check out the documentation:
         # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
 
@@ -78,10 +64,12 @@ class StoryTellerCrew():
             tasks=self.tasks, # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
-            output_log_file='story_teller_crew_log.json',
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )
 
 if __name__ == "__main__":
-    crew = StoryTellerCrew().crew()
-    crew.kickoff()
+    crew = WebSearchCrew().crew()
+    crew.kickoff(inputs={
+        "topic": "What is CrewAI?"
+       }
+    )

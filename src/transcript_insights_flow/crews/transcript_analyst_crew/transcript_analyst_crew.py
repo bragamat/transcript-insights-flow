@@ -10,6 +10,7 @@ from transcript_insights_flow.crews.transcript_analyst_crew.models import Transc
 
 from crewai.knowledge.source.text_file_knowledge_source import TextFileKnowledgeSource
 
+# Knowledge source pointing to the knowledge folder at project root
 text_source = TextFileKnowledgeSource(
     file_paths=["transcript_1.txt"]
 )
@@ -72,5 +73,6 @@ class TranscriptAnalystCrew():
             tasks=self.tasks, # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
+            output_log_file='transcript_analyst_crew_log.json',
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )
